@@ -2,10 +2,13 @@ import 'package:design_pattern_learning/adapter.dart';
 import 'package:design_pattern_learning/command.dart';
 import 'package:design_pattern_learning/decorator.dart';
 import 'package:design_pattern_learning/facade.dart';
+import 'package:design_pattern_learning/iterator/diner_menu/diner_menu.dart';
+import 'package:design_pattern_learning/iterator/pancake_house_menu/pancake_house_menu.dart';
+import 'package:design_pattern_learning/iterator/waitress.dart';
 import 'package:design_pattern_learning/visitor.dart';
 
 void main() {
-  _testVisitor();
+  _testIterator();
 }
 
 void _testDecorator() {
@@ -69,4 +72,11 @@ void _testVisitor() {
   }
 
   print(result);
+}
+
+
+void _testIterator() {
+  final waitress = Waitress([PancakeHouseMenu(), DinerMenu()]);
+
+  waitress.printMenu();
 }
