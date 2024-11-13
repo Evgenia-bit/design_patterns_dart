@@ -1,5 +1,6 @@
 import 'package:design_pattern_learning/adapter.dart';
 import 'package:design_pattern_learning/command.dart';
+import 'package:design_pattern_learning/composite/composite.dart' as composite;
 import 'package:design_pattern_learning/decorator.dart';
 import 'package:design_pattern_learning/facade.dart';
 import 'package:design_pattern_learning/iterator/diner_menu/diner_menu.dart';
@@ -8,7 +9,7 @@ import 'package:design_pattern_learning/iterator/waitress.dart';
 import 'package:design_pattern_learning/visitor.dart';
 
 void main() {
-  _testIterator();
+  _testComposite();
 }
 
 void _testDecorator() {
@@ -74,9 +75,75 @@ void _testVisitor() {
   print(result);
 }
 
-
 void _testIterator() {
   final waitress = Waitress([PancakeHouseMenu(), DinerMenu()]);
+
+  waitress.printMenu();
+}
+
+void _testComposite() {
+  final dinerMenu = composite.Menu('Diner Menu', 'Breakfast');
+  dinerMenu.add(
+    composite.MenuItem(
+      'Vegetarian BLT',
+      'Bacon with lettuce & tomato on whole wheat',
+      true,
+      2.99,
+    ),
+  );
+  dinerMenu.add(
+    composite.MenuItem(
+      'Pancake',
+      'Pancake with syrup',
+      false,
+      2.99,
+    ),
+  );
+  dinerMenu.add(
+    composite.MenuItem(
+      'Waffles',
+      'Waffles with blueberries',
+      true,
+      3.59,
+    ),
+  );
+
+  final pancakeHouseMenu = composite.Menu('Pancake House Menu', 'Breakfast');
+
+  pancakeHouseMenu.add(
+    composite.MenuItem(
+      'K&B\'s Pancake Breakfast',
+      'Pancake with scrambled eggs, and toast',
+      true,
+      2.99,
+    ),
+  );
+  pancakeHouseMenu.add(
+    composite.MenuItem(
+      'Regular Pancake Breakfast',
+      'Pancake with fried eggs, sausage',
+      false,
+      2.99,
+    ),
+  );
+
+  final dessertMenu = composite.Menu('Dessert Menu', 'Dessert of course!');
+
+  dessertMenu.add(
+    composite.MenuItem(
+      'Apple Pie',
+      'Apple pie with a flakey crust',
+      true,
+      1.59,
+    ),
+  );
+
+  dinerMenu.add(dessertMenu);
+
+  final waitress = composite.Waitress([
+    dinerMenu,
+    pancakeHouseMenu,
+  ]);
 
   waitress.printMenu();
 }
